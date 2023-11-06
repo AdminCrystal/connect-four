@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3 uid="uid://cm2l57nw65ei1"]
+
+[ext_resource type="Script" path="res://ConnectFour.gd" id="1_35ali"]
+[ext_resource type="Script" path="res://ScreenSizeAdjuster.gd" id="4_kuk4m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ji6fu"]
+size = Vector2(832, 741)
+
+[sub_resource type="LabelSettings" id="LabelSettings_h84la"]
+font_size = 22
+
+[node name="Main" type="Node"]
+
+[node name="ConnectFour" type="Node2D" parent="."]
+script = ExtResource("1_35ali")
+GameSize = Vector2i(10, 10)
+InARowToWin = 4
+Player1 = "Brent"
+Player2 = "Hannah"
+Player1Color = Color(0.741176, 0, 0, 1)
+Player2Color = Color(0, 0, 0.580392, 1)
+
+[node name="GameBoard" type="Area2D" parent="ConnectFour"]
+
+[node name="PlayArea" type="CollisionShape2D" parent="ConnectFour/GameBoard"]
+position = Vector2(548, 528.5)
+shape = SubResource("RectangleShape2D_ji6fu")
+metadata/_edit_group_ = true
+
+[node name="EditorTools" type="Node" parent="."]
+
+[node name="ScreenSizeAdjuster" type="Node" parent="EditorTools"]
+script = ExtResource("4_kuk4m")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="UsersTurnLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 754.0
+offset_top = -2.0
+offset_right = 1078.0
+offset_bottom = 74.0
+text = "Users turn: "
+label_settings = SubResource("LabelSettings_h84la")
+
+[connection signal="input_event" from="ConnectFour/GameBoard" to="ConnectFour" method="_on_game_board_input_event"]
